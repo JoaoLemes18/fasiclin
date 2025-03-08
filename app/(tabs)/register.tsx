@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   logo: {
-    width: 250, // Defina o tamanho da logo
+    width: 320, // Defina o tamanho da logo
     height: 150,
     alignSelf: "center", // Centraliza a logo
     marginBottom: 20, // Espaço abaixo da logo
