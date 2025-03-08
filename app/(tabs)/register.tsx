@@ -27,6 +27,7 @@ const Register = () => {
     { cod_especialidade: "01", especialidade: "Nutrição" },
     { cod_especialidade: "02", especialidade: "Medicina" },
     { cod_especialidade: "03", especialidade: "Odontologia" },
+    { cod_especialidade: "04", especialidade: "Psicologia" },
   ]);
 
   const [disableOptions, setDisableOptions] = useState(false);
@@ -52,8 +53,7 @@ const Register = () => {
       return;
     }
 
-    // Redireciona para a próxima tela após o cadastro
-    router.push("/secound"); // Aqui, você define para qual tela deseja navegar após o cadastro
+    router.push("/secound");
   };
 
   const handleTipoProf = (tipo: string) => {
@@ -71,31 +71,32 @@ const Register = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image
-        source={require("../../assets/images/fasiclin.png")} // Caminho para a logo
+        source={require("../../assets/images/fasiclin.png")}
         style={styles.logo}
       />
-      <Input
-        label="Código"
-        placeholder="Código"
-        value={formState.cod_prof}
-        onChangeText={(text) => handleInput("cod_prof", text)}
-      />
+      <View style={{ bottom: 15 }}>
+        <Input
+          label="Código"
+          placeholder="Código"
+          value={formState.cod_prof}
+          onChangeText={(text) => handleInput("cod_prof", text)}
+        />
 
-      <Input
-        label="Nome"
-        placeholder="Nome"
-        value={formState.nome_prof}
-        onChangeText={(text) => handleInput("nome_prof", text)}
-      />
+        <Input
+          label="Nome"
+          placeholder="Nome"
+          value={formState.nome_prof}
+          onChangeText={(text) => handleInput("nome_prof", text)}
+        />
 
-      <Input
-        label="Senha"
-        placeholder="Senha"
-        secureTextEntry
-        value={formState.senha_prof}
-        onChangeText={(text) => handleInput("senha_prof", text)}
-      />
-
+        <Input
+          label="Senha"
+          placeholder="Senha"
+          secureTextEntry
+          value={formState.senha_prof}
+          onChangeText={(text) => handleInput("senha_prof", text)}
+        />
+      </View>
       <Text style={styles.label}>Tipo do profissional</Text>
       <View style={styles.buttonGroup}>
         <TouchableOpacity
@@ -221,7 +222,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     marginBottom: 15,
-    justifyContent: "space-around",
   },
   button: {
     backgroundColor: "#6C757D", // Cor padrão do botão
