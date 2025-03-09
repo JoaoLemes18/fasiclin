@@ -13,18 +13,16 @@ const Tabs = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          // Definindo ícones para cada aba
           if (route.name === "Cadastro de Profissional") {
-            iconName = focused ? "person-add" : "person-add-outline"; // Ícone para "Cadastro de Profissional"
+            iconName = focused ? "person-add" : "person-add-outline";
           } else if (route.name === "Profissionais Cadastrados") {
-            iconName = focused ? "people" : "people-outline"; // Ícone para "Profissionais Cadastrados"
+            iconName = focused ? "people" : "people-outline";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        // Definindo cores para as abas
-        tabBarActiveTintColor: "#28A745", // Cor verde para o ícone ativo
-        tabBarInactiveTintColor: "gray", // Cor do ícone inativo
+        tabBarActiveTintColor: "#00A32A",
+        tabBarInactiveTintColor: "gray",
       })}
     >
       <Tab.Screen name="Cadastro de Profissional" component={RegisterScreen} />

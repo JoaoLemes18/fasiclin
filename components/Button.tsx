@@ -10,7 +10,7 @@ const Button = ({ content, icon, ...props }: ButtonProps) => {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#4CAF50", // Cor verde
+        backgroundColor: "#00a32a", // Cor verde
         paddingVertical: 15,
         paddingHorizontal: 20,
         borderRadius: 10,

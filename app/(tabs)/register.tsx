@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  SafeAreaView,
 } from "react-native";
 import { useRouter } from "expo-router";
 import Button from "@/components/Button"; // Importando o hook useRouter
@@ -19,8 +20,11 @@ const Register = () => {
     nome_prof: "",
     tipo_prof: "1",
     cod_espec: "00",
+    cons_prof: "",
     senha_prof: "",
+    email_prof: "",
     status_prof: "1",
+    motivo_suspensao: "",
   });
 
   const [especialidades, setEspecialidades] = useState([
@@ -46,8 +50,11 @@ const Register = () => {
       !formState.nome_prof ||
       !formState.cod_espec ||
       !formState.tipo_prof ||
+      !formState.cons_prof ||
       !formState.senha_prof ||
-      !formState.status_prof
+      !formState.email_prof ||
+      !formState.status_prof ||
+      (formState.status_prof === "3" && !formState.motivo_suspensao)
     ) {
       Alert.alert("Erro", "Por favor, preencha todos os campos obrigatórios.");
       return;
@@ -69,127 +76,153 @@ const Register = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image
-        source={require("../../assets/images/fasiclin.png")}
-        style={styles.logo}
-      />
-      <View style={{ bottom: 15 }}>
-        <Input
-          label="Código"
-          placeholder="Código"
-          value={formState.cod_prof}
-          onChangeText={(text) => handleInput("cod_prof", text)}
+    <SafeAreaView>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Image
+          source={require("../../assets/images/fasiclin.png")}
+          style={styles.logo}
         />
+        <View style={{ bottom: 15 }}>
+          <Input
+            label="Código"
+            placeholder="Código"
+            value={formState.cod_prof}
+            onChangeText={(text) => handleInput("cod_prof", text)}
+          />
 
-        <Input
-          label="Nome"
-          placeholder="Nome"
-          value={formState.nome_prof}
-          onChangeText={(text) => handleInput("nome_prof", text)}
-        />
-
-        <Input
-          label="Senha"
-          placeholder="Senha"
-          secureTextEntry
-          value={formState.senha_prof}
-          onChangeText={(text) => handleInput("senha_prof", text)}
-        />
-      </View>
-      <Text style={styles.label}>Tipo do profissional</Text>
-      <View style={styles.buttonGroup}>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            formState.tipo_prof === "1" && styles.selectedButton,
-          ]}
-          onPress={() => handleTipoProf("1")}
-        >
-          <Text style={styles.buttonText}>Administrativo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            formState.tipo_prof === "2" && styles.selectedButton,
-          ]}
-          onPress={() => handleTipoProf("2")}
-        >
-          <Text style={styles.buttonText}>Estagiário</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            formState.tipo_prof === "3" && styles.selectedButton,
-          ]}
-          onPress={() => handleTipoProf("3")}
-        >
-          <Text style={styles.buttonText}>Supervisor</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            formState.tipo_prof === "4" && styles.selectedButton,
-          ]}
-          onPress={() => handleTipoProf("4")}
-        >
-          <Text style={styles.buttonText}>Master</Text>
-        </TouchableOpacity>
-      </View>
-
-      <Text style={styles.label}>Status do profissional</Text>
-      <View style={styles.buttonGroup}>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            formState.status_prof === "1" && styles.selectedButton,
-          ]}
-          onPress={() => handleStatusProf("1")}
-        >
-          <Text style={styles.buttonText}>Ativo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            formState.status_prof === "2" && styles.selectedButton,
-          ]}
-          onPress={() => handleStatusProf("2")}
-        >
-          <Text style={styles.buttonText}>Inativo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            formState.status_prof === "3" && styles.selectedButton,
-          ]}
-          onPress={() => handleStatusProf("3")}
-        >
-          <Text style={styles.buttonText}>Suspenso</Text>
-        </TouchableOpacity>
-      </View>
-
-      <Text style={styles.label}>Especialidade do Profissional</Text>
-      <View style={styles.buttonGroup}>
-        {especialidades.map((especialidade) => (
+          <Input
+            label="Nome"
+            placeholder="Nome"
+            value={formState.nome_prof}
+            onChangeText={(text) => handleInput("nome_prof", text)}
+          />
+          <Input
+            label="Código do Conselho de Classe"
+            placeholder="Código do Conselho de Classe"
+            secureTextEntry
+            value={formState.cons_prof}
+            onChangeText={(text) => handleInput("cons_prof", text)}
+          />
+          <Input
+            label="Email"
+            placeholder="Email"
+            secureTextEntry
+            value={formState.email_prof}
+            onChangeText={(text) => handleInput("senha_prof", text)}
+          />
+          <Input
+            label="Senha"
+            placeholder="Senha"
+            secureTextEntry
+            value={formState.senha_prof}
+            onChangeText={(text) => handleInput("senha_prof", text)}
+          />
+        </View>
+        <Text style={styles.label}>Tipo do profissional</Text>
+        <View style={styles.buttonGroup}>
           <TouchableOpacity
-            key={especialidade.cod_especialidade}
             style={[
               styles.button,
-              formState.cod_espec === especialidade.cod_especialidade &&
-                styles.selectedButton,
+              formState.tipo_prof === "1" && styles.selectedButton,
             ]}
-            onPress={() => handleEspecialidade(especialidade.cod_especialidade)}
-            disabled={disableOptions && formState.tipo_prof === "1"} // Desabilita se o tipo for Administrativo
+            onPress={() => handleTipoProf("1")}
           >
-            <Text style={styles.buttonText}>
-              {especialidade.cod_especialidade} - {especialidade.especialidade}
-            </Text>
+            <Text style={styles.buttonText}>Administrativo</Text>
           </TouchableOpacity>
-        ))}
-      </View>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              formState.tipo_prof === "2" && styles.selectedButton,
+            ]}
+            onPress={() => handleTipoProf("2")}
+          >
+            <Text style={styles.buttonText}>Estagiário</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              formState.tipo_prof === "3" && styles.selectedButton,
+            ]}
+            onPress={() => handleTipoProf("3")}
+          >
+            <Text style={styles.buttonText}>Supervisor</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              formState.tipo_prof === "4" && styles.selectedButton,
+            ]}
+            onPress={() => handleTipoProf("4")}
+          >
+            <Text style={styles.buttonText}>Master</Text>
+          </TouchableOpacity>
+        </View>
 
-      <Button onPress={handleSubmit} content={"Cadastrar"} />
-    </ScrollView>
+        <Text style={styles.label}>Status do profissional</Text>
+        <View style={styles.buttonGroup}>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              formState.status_prof === "1" && styles.selectedButton,
+            ]}
+            onPress={() => handleStatusProf("1")}
+          >
+            <Text style={styles.buttonText}>Ativo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              formState.status_prof === "2" && styles.selectedButton,
+            ]}
+            onPress={() => handleStatusProf("2")}
+          >
+            <Text style={styles.buttonText}>Inativo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              formState.status_prof === "3" && styles.selectedButton,
+            ]}
+            onPress={() => handleStatusProf("3")}
+          >
+            <Text style={styles.buttonText}>Suspenso</Text>
+          </TouchableOpacity>
+          {formState.status_prof === "3" && (
+            <Input
+              label="Motivo da Suspensão"
+              placeholder="Digite o motivo da suspensão"
+              value={formState.motivo_suspensao}
+              onChangeText={(text) => handleInput("motivo_suspensao", text)}
+            />
+          )}
+        </View>
+
+        <Text style={styles.label}>Especialidade do Profissional</Text>
+        <View style={styles.buttonGroup}>
+          {especialidades.map((especialidade) => (
+            <TouchableOpacity
+              key={especialidade.cod_especialidade}
+              style={[
+                styles.button,
+                formState.cod_espec === especialidade.cod_especialidade &&
+                  styles.selectedButton,
+              ]}
+              onPress={() =>
+                handleEspecialidade(especialidade.cod_especialidade)
+              }
+              disabled={disableOptions && formState.tipo_prof === "1"} // Desabilita se o tipo for Administrativo
+            >
+              <Text style={styles.buttonText}>
+                {especialidade.cod_especialidade} -{" "}
+                {especialidade.especialidade}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <Button onPress={handleSubmit} content={"Cadastrar"} />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -224,7 +257,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   button: {
-    backgroundColor: "#6C757D", // Cor padrão do botão
+    backgroundColor: "#6C757D",
     paddingVertical: 12, // Ajuste no espaçamento vertical
     paddingHorizontal: 25, // Ajuste no espaçamento horizontal
     borderRadius: 25, // Borda mais arredondada
@@ -240,9 +273,9 @@ const styles = StyleSheet.create({
     shadowRadius: 6, // Raio da sombra
   },
   selectedButton: {
-    backgroundColor: "#28A745", // Cor quando o botão for selecionado
-    borderColor: "#28A745", // Borda na cor de seleção
-    shadowColor: "#28A745", // Sombra com a mesma cor
+    backgroundColor: "#00a32a", // Cor quando o botão for selecionado
+    borderColor: "#00a32a", // Borda na cor de seleção
+    shadowColor: "#00a32a", // Sombra com a mesma cor
     shadowOpacity: 0.2, // Aumentando a opacidade da sombra quando selecionado
   },
   buttonText: {
